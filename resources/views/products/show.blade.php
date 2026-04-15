@@ -15,10 +15,21 @@
                     <p><strong>Propriétaire :</strong> {{ $product->user->name }}</p>
 
                     <div class="mt-4">
+                        @can('manage-product', $product)
                             <a href="{{ route('products.edit', $product) }}"
                                class="text-blue-600 underline">
                                 Modifier le produit
                             </a>
+
+                            <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="ms-4 text-red-600 underline"
+                                    onclick="return confirm('Supprimer ce produit ?')">
+                                    Supprimer
+                                </button>
+                            </form>
+                        @endcan
 
                         <a href="{{ route('products.index') }}" class="ms-4 text-gray-600 underline">
                             ← Retour à la liste
